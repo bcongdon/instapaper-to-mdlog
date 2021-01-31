@@ -10,6 +10,7 @@ import (
 var (
 	fakeItem1 = &gofeed.Item{Title: "Title1", Link: "http://link1"}
 	fakeItem2 = &gofeed.Item{Title: "Title2", Link: "http://link2"}
+	fakeItem3 = &gofeed.Item{Title: "Title3", Link: "http://link3?q=123"}
 )
 
 func TestMergeItems(t *testing.T) {
@@ -52,6 +53,16 @@ func TestMergeItems(t *testing.T) {
 			"# January 1, 2021\n" +
 				"- [Title1](http://link1)\n" +
 				"- [Foo](http://bar)",
+		},
+		{
+			"link with meta characters",
+			args{
+				"# January 1, 2021\n- [Foo](http://link3?q=123)",
+				date,
+				[]*gofeed.Item{fakeItem3},
+			},
+			"# January 1, 2021\n" +
+				"- [Foo](http://link3?q=123)",
 		},
 	}
 	for _, tt := range tests {

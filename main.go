@@ -38,7 +38,7 @@ func main() {
 func mergeItems(orig string, date time.Time, items []*gofeed.Item) (string, error) {
 	var unsavedItems []*gofeed.Item
 	for _, item := range items {
-		itemRegex, err := regexp.Compile(fmt.Sprintf(`\[.*\]\(%s\)`, item.Link))
+		itemRegex, err := regexp.Compile(fmt.Sprintf(`\[.*\]\(%s\)`, regexp.QuoteMeta(item.Link)))
 		if err != nil {
 			return "", nil
 		}
